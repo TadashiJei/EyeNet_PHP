@@ -9,379 +9,253 @@
 	<!-- Main content -->
 	<section class="content">
 		<?php if(!empty($statusmessage)): ?>
-				<div class="row"><div class='col-md-12'><div class="alert alert-<?php print $statusmessage["type"]; ?> alert-auto" role="alert"><?php print __($statusmessage["message"]); ?></div></div></div>
+				<div class="row"><div class='col-md-12'><div class="alert alert-<?php print $statusmessage["type"]; ?> alert-dismissible" role="alert">
+					<?php print __($statusmessage["message"]); ?>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div></div></div>
 		<?php endif; ?>
 
 		<?php if(file_exists("install") == 1): ?>
-			  <div class="row"><div class='col-md-12'><div class="alert alert-danger" role="alert"><b><?php _e('Plese delete the "install" directory!'); ?></b></div></div></div>
-	    <?php endif; ?>
+			<div class="alert alert-danger">
+				<?php _e('Please delete the "install" directory!'); ?>
+			</div>
+		<?php endif; ?>
 
-
-		<!-- Small boxes (Stat box) -->
-         <div class="row">
-           <div class="col-lg-3 col-xs-6">
-             <!-- small box -->
-             <div class="small-box bg-green">
-               <div class="inner">
-                 <h3><?php echo $servers_count; ?></h3>
-                 <p><?php _e('Servers'); ?></p>
-               </div>
-               <div class="icon">
-                 <i class="fa fa-server"></i>
-               </div>
-               <a href="?route=servers" class="small-box-footer"><?php _e('View all'); ?> <i class="fa fa-arrow-circle-right"></i></a>
-             </div>
-           </div>
-           <!-- ./col -->
-           <div class="col-lg-3 col-xs-6">
-             <!-- small box -->
-             <div class="small-box bg-blue">
-               <div class="inner">
-                 <h3><?php echo $websites_count; ?></h3>
-                 <p><?php _e('Websites'); ?></p>
-               </div>
-               <div class="icon">
-                 <i class="fa fa-globe"></i>
-               </div>
-               <a href="?route=websites" class="small-box-footer"><?php _e('View all'); ?> <i class="fa fa-arrow-circle-right"></i></a>
-             </div>
-           </div>
-           <!-- ./col -->
-  		 <div class="col-lg-3 col-xs-6">
-             <!-- small box -->
-             <div class="small-box bg-teal">
-               <div class="inner">
-                 <h3><?php echo $checks_count; ?></h3>
-                 <p><?php _e('Checks'); ?></p>
-               </div>
-               <div class="icon">
-                 <i class="fa fa-check-circle"></i>
-               </div>
-               <a href="?route=checks" class="small-box-footer"><?php _e('View all'); ?> <i class="fa fa-arrow-circle-right"></i></a>
-             </div>
-           </div>
-           <!-- ./col -->
-           <div class="col-lg-3 col-xs-6">
-             <!-- small box -->
-
-  	           <div class="small-box bg-yellow">
-  	             <div class="inner">
-  	               <h3><?php echo $contacts_count; ?></h3>
-  	               <p><?php _e('Contacts'); ?></p>
-  	             </div>
-  	             <div class="icon">
-  	               <i class="fa fa-users"></i>
-  	             </div>
-  	             <a href="?route=alerting/contacts" class="small-box-footer"><?php _e('View all'); ?> <i class="fa fa-arrow-circle-right"></i></a>
-  	           </div>
-
-
-           </div>
-           <!-- ./col -->
-
-         </div>
-         <!-- /.row -->
-
-
-		<div class="row">
-
-			<div class="col-md-8">
-
-				<?php if(!$isGoogleMaps) { ?>
-					<div class="row"><div class='col-md-12'><div class="alert alert-info" role="alert"><b><?php _e('Add a Google Maps API key in System > Settings in order to display monitors status on map.'); ?></b></div></div></div>
-				<?php } ?>
-
-				<div class="box box-primary">
-					<div class="box-header with-border">
-						<h3 class="box-title"><?php _e('Around the world'); ?></h3>
-						<div class="box-tools pull-right">
-							<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-						</div>
-					</div>
-					<!-- /.box-header -->
-
-					<div class="box-body no-padding">
-
-						<?php if(!$isGoogleMaps) { ?>
-							<div class="pad">
-								<!-- Map will be created here -->
-								<div id="world-map-markers" style="height: 450px;"></div>
-							</div>
-						<?php } ?>
-
-						<?php if($isGoogleMaps) { ?>
-							<div id="googleMap" style="width:100%;height:530px;"></div>
-						<?php } ?>
-
-					</div>
-					<!-- /.box-body -->
-
-					<?php if(!$isGoogleMaps) { ?>
-						<div class="box-footer">
-							<span class="text-gray"><?php _e('Add a Google Maps API key in settings for a more detailed map.'); ?></span>
-						</div>
-					<?php } ?>
+		<!-- Stats Overview -->
+		<div class="row stats-row">
+			<div class="col-md-3 stat-box">
+				<div class="stat-icon">
+					<i class="fa fa-server"></i>
 				</div>
-				<!-- /.box -->
-
+				<div class="stat-count"><?php echo $servers_count; ?></div>
+				<div class="stat-label"><?php _e('Servers'); ?></div>
+				<a href="?route=servers" class="stat-link">View all →</a>
 			</div>
 
-
-			<div class="col-md-4">
-				<div class="box box-primary">
-					<div class="box-header ">
-						<h3 class="box-title"><?php _e('Servers Overview'); ?></h3>
-						<div class="pull-right box-tools">
-							<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-						</div>
-					</div>
-
-					<div class="box-body">
-						<?php if($main_servers_unresolved) { ?>
-							<div class="table-responsive">
-								<table class="table table-striped table-hover table-bordered">
-									<thead>
-										<tr>
-											<th class="no-sort" style="width:1%"></th>
-											<th><?php _e('Server'); ?></th>
-											<th><?php _e('Incident'); ?></th>
-											<th><?php _e('Start Time'); ?></th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php foreach ($main_servers_unresolved as $incident) { ?>
-											<tr>
-												<td>
-													<?php if($incident['status'] == 1) { ?>
-														<i class="fa fa-check-circle fa-2x text-green" data-toggle="tooltip" title="<?php _e("OK"); ?>"></i>
-													<?php } elseif($incident['status'] == 2) { ?>
-														<?php if(in_array("editServer",$perms)) { ?>
-															<a href="#" onClick='showM("?modal=serveralerts/markResolved&reroute=servers/manage-<?php echo getSingleValue("app_servers","type",$incident['serverid']); ?>&routeid=<?php echo $incident['serverid']; ?>&id=<?php echo $incident['id']; ?>&section=");return false'><i class="fa fa-2x fa-warning text-yellow" data-toggle="tooltip" title="<?php _e("Warning"); ?>"></i></a>
-														<?php } else { ?><i class="fa fa-2x fa-warning text-yellow" data-toggle="tooltip" title="<?php _e("Warning"); ?>"></i><?php } ?>
-													<?php } elseif($incident['status'] == 3) { ?>
-														<?php if(in_array("editServer",$perms)) { ?>
-															<a href="#" onClick='showM("?modal=serveralerts/markResolved&reroute=servers/manage-<?php echo getSingleValue("app_servers","type",$incident['serverid']); ?>&routeid=<?php echo $incident['serverid']; ?>&id=<?php echo $incident['id']; ?>&section=");return false'><i class="fa fa-2x fa-warning text-red" data-toggle="tooltip" title="<?php _e("Alert"); ?>"></i></a>
-														<?php } else { ?><i class="fa fa-2x fa-warning text-red" data-toggle="tooltip" title="<?php _e("Alert"); ?>"></i><?php } ?>
-													<?php } else { ?>
-														<?php if(in_array("editServer",$perms)) { ?>
-															<a href="#" onClick='showM("?modal=serveralerts/markResolved&reroute=servers/manage-<?php echo getSingleValue("app_servers","type",$incident['serverid']); ?>&routeid=<?php echo $incident['serverid']; ?>&id=<?php echo $incident['id']; ?>&section=");return false'><i class="fa fa-2x fa-warning text-gray" data-toggle="tooltip" title="<?php _e("Unknown"); ?>"></i></a>
-														<?php } else { ?><i class="fa fa-2x fa-warning text-gray" data-toggle="tooltip" title="<?php _e("Unknown"); ?>"></i><?php } ?>
-													<?php } ?>
-												</td>
-												<td><?php echo getSingleValue("app_servers","name",$incident['serverid']); ?></td>
-												<td>
-													<?php if($incident['type'] == "nodata") _e('No Data'); ?>
-													<?php if($incident['type'] == "cpu") _e('CPU Usage %'); ?>
-													<?php if($incident['type'] == "cpuio") _e('CPU IO Wait %'); ?>
-													<?php if($incident['type'] == "load1min") _e('System Load 1 Min'); ?>
-													<?php if($incident['type'] == "load5min") _e('System Load 5 Min'); ?>
-													<?php if($incident['type'] == "load15min") _e('System Load 15 Min'); ?>
-													<?php if($incident['type'] == "service") _e('Service/Process Not Running'); ?>
-
-													<?php if($incident['type'] == "ram") _e('RAM Usage %'); ?>
-													<?php if($incident['type'] == "ramMB") _e('RAM Usage MB'); ?>
-													<?php if($incident['type'] == "swap") _e('Swap Usage %'); ?>
-													<?php if($incident['type'] == "swapMB") _e('Swap Usage MB'); ?>
-													<?php if($incident['type'] == "disk") _e('Disk Usage % (Aggregated)'); ?>
-													<?php if($incident['type'] == "diskGB") _e('Disk Usage GB (Aggregated)'); ?>
-													<?php
-														if(strpos($incident['type'],'disk:') !== false) {
-															$disk_text = explode(":",$incident['type'],2);
-															_e('Disk Usage %:'); echo " " . $disk_text[1];
-														}
-													?>
-
-													<?php
-														if(strpos($incident['type'],'diskGB:') !== false) {
-															$disk_text = explode(":",$incident['type'],2);
-															_e('Disk Usage GB:'); echo " " . $disk_text[1];
-														}
-													?>
-
-                                                    <?php if($incident['type'] == "mdadmDegraded") _e('MDADM Degraded'); ?>
-
-													<?php if($incident['type'] == "connections") _e('Connections'); ?>
-													<?php if($incident['type'] == "ssh") _e('SSH Sessions'); ?>
-													<?php if($incident['type'] == "ping") _e('Ping Latency'); ?>
-													<?php if($incident['type'] == "netdl") _e('Network Download Speed MB/s'); ?>
-													<?php if($incident['type'] == "netup") _e('Network Upload Speed MB/s'); ?>
-
-													<?php if($incident['type'] == "nodata") { ?>
-
-													<?php } elseif($incident['type'] == "service") { ?>
-														<b><?php echo $incident['comparison_limit']; ?></b>
-
-													<?php } else { ?>
-														<?php echo $incident['comparison']; ?> <?php echo $incident['comparison_limit']; ?>
-													<?php } ?>
-												</td>
-												<td><?php echo dateTimeDisplay($incident['start_time']); ?></td>
-											</tr>
-										<?php } ?>
-									</tbody>
-								</table>
-							</div>
-						<?php } else { ?>
-							<div class="callout callout-ok">
-								<p class="lead"><i class="icon fa fa-check text-green"></i> <?php _e("Hooray! All servers are healthy.") ?></p>
-							</div>
-						<?php } ?>
-					</div>
+			<div class="col-md-3 stat-box">
+				<div class="stat-icon">
+					<i class="fa fa-globe"></i>
 				</div>
-
-
-				<div class="box box-primary">
-					<div class="box-header ">
-						<h3 class="box-title"><?php _e('Websites Overview'); ?></h3>
-						<div class="pull-right box-tools">
-							<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-						</div>
-					</div>
-
-					<div class="box-body">
-						<?php if($main_websites_unresolved) { ?>
-							<div class="table-responsive">
-								<table class="table table-striped table-hover table-bordered">
-									<thead>
-										<tr>
-											<th class="no-sort" style="width:1%"></th>
-											<th><?php _e('Website'); ?></th>
-											<th><?php _e('Incident'); ?></th>
-											<th><?php _e('Start Time'); ?></th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php foreach ($main_websites_unresolved as $incident) { ?>
-											<tr>
-												<td>
-													<?php if($incident['status'] == 1) { ?>
-														<i class="fa fa-check-circle fa-2x text-green" data-toggle="tooltip" title="<?php _e("OK"); ?>"></i>
-													<?php } elseif($incident['status'] == 2) { ?>
-														<?php if(in_array("editWebsite",$perms)) { ?>
-															<a href="#" onClick='showM("?modal=websitealerts/markResolved&reroute=websites/manage&routeid=<?php echo $incident['websiteid']; ?>&id=<?php echo $incident['id']; ?>&section=");return false'><i class="fa fa-2x fa-warning text-yellow" data-toggle="tooltip" title="<?php _e("Warning"); ?>"></i></a>
-														<?php } else { ?><i class="fa fa-2x fa-warning text-yellow" data-toggle="tooltip" title="<?php _e("Warning"); ?>"></i><?php } ?>
-													<?php } elseif($incident['status'] == 3) { ?>
-														<?php if(in_array("editWebsite",$perms)) { ?>
-															<a href="#" onClick='showM("?modal=websitealerts/markResolved&reroute=websites/manage&routeid=<?php echo $incident['websiteid']; ?>&id=<?php echo $incident['id']; ?>&section=");return false'><i class="fa fa-2x fa-warning text-red" data-toggle="tooltip" title="<?php _e("Alert"); ?>"></i></a>
-														<?php } else { ?><i class="fa fa-2x fa-warning text-red" data-toggle="tooltip" title="<?php _e("Alert"); ?>"></i><?php } ?>
-													<?php } else { ?>
-														<?php if(in_array("editWebsite",$perms)) { ?>
-															<a href="#" onClick='showM("?modal=websitealerts/markResolved&reroute=websites/manage&routeid=<?php echo $incident['websiteid']; ?>&id=<?php echo $incident['id']; ?>&section=");return false'><i class="fa fa-2x fa-warning text-gray" data-toggle="tooltip" title="<?php _e("Unknown"); ?>"></i></a>
-														<?php } else { ?><i class="fa fa-2x fa-warning text-gray" data-toggle="tooltip" title="<?php _e("Unknown"); ?>"></i><?php } ?>
-													<?php } ?>
-												</td>
-												<td><?php echo getSingleValue("app_websites","name",$incident['websiteid']); ?></td>
-												<td>
-													<?php if($incident['type'] == "responsecode") _e('HTTP Response Code'); ?>
-													<?php if($incident['type'] == "loadtime") _e('Load Time'); ?>
-													<?php if($incident['type'] == "searchstringmissing") _e('Search String Missing'); ?>
-
-													<?php if($incident['type'] == "searchstringmissing") { ?>
-
-													<?php } else { ?>
-														<?php echo $incident['comparison']; ?> <?php echo $incident['comparison_limit']; ?>
-													<?php } ?>
-												</td>
-												<td><?php echo dateTimeDisplay($incident['start_time']); ?></td>
-											</tr>
-										<?php } ?>
-									</tbody>
-								</table>
-							</div>
-						<?php } else { ?>
-							<div class="callout callout-ok">
-								<p class="lead"><i class="icon fa fa-check text-green"></i> <?php _e("Hooray! All websites are healthy.") ?></p>
-							</div>
-						<?php } ?>
-					</div>
-				</div>
-
-
-				<div class="box box-primary">
-					<div class="box-header ">
-						<h3 class="box-title"><?php _e('Checks Overview'); ?></h3>
-						<div class="pull-right box-tools">
-							<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-						</div>
-					</div>
-
-					<div class="box-body">
-						<?php if($main_checks_unresolved) { ?>
-							<div class="table-responsive">
-								<table class="table table-striped table-hover table-bordered">
-									<thead>
-										<tr>
-											<th class="no-sort" style="width:1%"></th>
-											<th><?php _e('Check'); ?></th>
-											<th><?php _e('Incident'); ?></th>
-											<th><?php _e('Start Time'); ?></th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php foreach ($main_checks_unresolved as $incident) { ?>
-											<tr>
-												<td>
-													<?php if($incident['status'] == 1) { ?>
-														<i class="fa fa-check-circle fa-2x text-green" data-toggle="tooltip" title="<?php _e("OK"); ?>"></i>
-													<?php } elseif($incident['status'] == 2) { ?>
-														<?php if(in_array("editCheck",$perms)) { ?>
-															<a href="#" onClick='showM("?modal=checkalerts/markResolved&reroute=checks/manage&routeid=<?php echo $incident['incidentid']; ?>&id=<?php echo $incident['id']; ?>&section=");return false'><i class="fa fa-2x fa-warning text-yellow" data-toggle="tooltip" title="<?php _e("Warning"); ?>"></i></a>
-														<?php } else { ?><i class="fa fa-2x fa-warning text-yellow" data-toggle="tooltip" title="<?php _e("Warning"); ?>"></i><?php } ?>
-													<?php } elseif($incident['status'] == 3) { ?>
-														<?php if(in_array("editCheck",$perms)) { ?>
-															<a href="#" onClick='showM("?modal=checkalerts/markResolved&reroute=checks/manage&routeid=<?php echo $incident['incidentid']; ?>&id=<?php echo $incident['id']; ?>&section=");return false'><i class="fa fa-2x fa-warning text-red" data-toggle="tooltip" title="<?php _e("Alert"); ?>"></i></a>
-														<?php } else { ?><i class="fa fa-2x fa-warning text-red" data-toggle="tooltip" title="<?php _e("Alert"); ?>"></i><?php } ?>
-													<?php } else { ?>
-														<?php if(in_array("editCheck",$perms)) { ?>
-															<a href="#" onClick='showM("?modal=checkalerts/markResolved&reroute=checks/manage&routeid=<?php echo $incident['incidentid']; ?>&id=<?php echo $incident['id']; ?>&section=");return false'><i class="fa fa-2x fa-warning text-gray" data-toggle="tooltip" title="<?php _e("Unknown"); ?>"></i></a>
-														<?php } else { ?><i class="fa fa-2x fa-warning text-gray" data-toggle="tooltip" title="<?php _e("Unknown"); ?>"></i><?php } ?>
-													<?php } ?>
-												</td>
-												<td><?php echo getSingleValue("app_checks","name",$incident['checkid']); ?></td>
-												<td>
-													<?php if($incident['type'] == "offline") _e('Check Offline'); ?>
-													<?php if($incident['type'] == "responsetime") _e('Response Time'); ?>
-													<?php if($incident['type'] == "blacklisted") _e('Listed In Blacklist'); ?>
-													<?php if($incident['type'] == "dnsfailed") _e('DNS Lookup Failed'); ?>
-													<?php if($incident['type'] == "unsuccessful") _e('Unsuccessful'); ?>
-													<?php if($incident['type'] == "offline" || $incident['type'] == "blacklisted" || $incident['type'] == "dnsfailed" || $incident['type'] == "unsuccessful") { ?>
-													<?php } else { ?>
-														<?php echo $incident['comparison']; ?> <?php echo $incident['comparison_limit']; ?>
-													<?php } ?>
-												</td>
-												<td><?php echo dateTimeDisplay($incident['start_time']); ?></td>
-											</tr>
-										<?php } ?>
-									</tbody>
-								</table>
-							</div>
-						<?php } else { ?>
-							<div class="callout callout-ok">
-								<p class="lead"><i class="icon fa fa-check text-green"></i> <?php _e("Hooray! All checks are healthy.") ?></p>
-							</div>
-						<?php } ?>
-					</div>
-				</div>
-
-
+				<div class="stat-count"><?php echo $websites_count; ?></div>
+				<div class="stat-label"><?php _e('Websites'); ?></div>
+				<a href="?route=websites" class="stat-link">View all →</a>
 			</div>
 
-
-			<div class="col-md-4">
-
+			<div class="col-md-3 stat-box">
+				<div class="stat-icon">
+					<i class="fa fa-check-circle"></i>
+				</div>
+				<div class="stat-count"><?php echo $checks_count; ?></div>
+				<div class="stat-label"><?php _e('Checks'); ?></div>
+				<a href="?route=checks" class="stat-link">View all →</a>
 			</div>
 
-
-			<div class="col-md-4">
-
+			<div class="col-md-3 stat-box">
+				<div class="stat-icon">
+					<i class="fa fa-users"></i>
+				</div>
+				<div class="stat-count"><?php echo $contacts_count; ?></div>
+				<div class="stat-label"><?php _e('Contacts'); ?></div>
+				<a href="?route=alerting/contacts" class="stat-link">View all →</a>
 			</div>
-
 		</div>
 
+		<?php if(!$isGoogleMaps) { ?>
+			<div class="alert alert-info maps-alert">
+				<?php _e('Add a Google Maps API key in System > Settings to display monitors status on map.'); ?>
+			</div>
+		<?php } ?>
 
+		<div class="row">
+			<div class="col-md-8">
+				<div class="map-section">
+					<div class="section-header">
+						<h3><?php _e('Around the world'); ?></h3>
+						<button class="collapse-btn">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+					<div class="section-body">
+						<?php if(!$isGoogleMaps) { ?>
+							<div id="world-map-markers" style="height: 450px;"></div>
+						<?php } else { ?>
+							<div id="googleMap" style="width:100%;height:450px;"></div>
+						<?php } ?>
+					</div>
+				</div>
+			</div>
 
-	</section><!-- /.content -->
-</aside><!-- /.right-side -->
+			<div class="col-md-4">
+				<div class="overview-section">
+					<div class="section-header">
+						<h3><?php _e('Servers Overview'); ?></h3>
+						<button class="collapse-btn">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+					<div class="section-body">
+						<div class="status-box">
+							<i class="fa fa-check-circle status-icon"></i>
+							<div class="status-text">
+								<p class="status-title"><?php _e("All Systems Operational") ?></p>
+								<p class="status-desc"><?php _e("Hooray! All servers are healthy.") ?></p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="overview-section">
+					<div class="section-header">
+						<h3><?php _e('Websites Overview'); ?></h3>
+						<button class="collapse-btn">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+					<div class="section-body">
+						<div class="status-box">
+							<i class="fa fa-check-circle status-icon"></i>
+							<div class="status-text">
+								<p class="status-title"><?php _e("All Systems Operational") ?></p>
+								<p class="status-desc"><?php _e("Hooray! All websites are healthy.") ?></p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="overview-section">
+					<div class="section-header">
+						<h3><?php _e('Checks Overview'); ?></h3>
+						<button class="collapse-btn">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+					<div class="section-body">
+						<div class="status-box">
+							<i class="fa fa-check-circle status-icon"></i>
+							<div class="status-text">
+								<p class="status-title"><?php _e("All Systems Operational") ?></p>
+								<p class="status-desc"><?php _e("Hooray! All checks are healthy.") ?></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<style>
+/* Alert Styles */
+.alert {
+    border: none;
+    border-radius: 0;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.alert-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.maps-alert {
+    background-color: #17a2b8;
+    color: white;
+}
+
+/* Stats Row */
+.stats-row {
+    margin: 0 -10px 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.stat-box {
+    background: white;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.stat-icon {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.stat-count {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.stat-link {
+    color: #666;
+    text-decoration: none;
+}
+
+/* Map and Overview Sections */
+.map-section,
+.overview-section {
+    background: white;
+    margin-bottom: 20px;
+}
+
+.section-header {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.collapse-btn {
+    background: none;
+    border: none;
+    color: #666;
+    padding: 0;
+}
+
+.section-body {
+    padding: 15px;
+}
+
+/* Status Box */
+.status-box {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.status-icon {
+    font-size: 20px;
+    color: #28a745;
+    margin-right: 15px;
+}
+
+.status-text {
+    flex: 1;
+}
+
+.status-title {
+    margin: 0;
+    font-weight: 500;
+}
+
+.status-desc {
+    margin: 5px 0 0;
+    color: #666;
+    font-size: 14px;
+}
+</style>
 
 <?php if(!$isGoogleMaps) { ?>
 	<script type="text/javascript">
