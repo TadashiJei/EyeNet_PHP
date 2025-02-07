@@ -31,44 +31,88 @@ catch(Exception $e) {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>EyeNet Installer</title>
-        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <title>EyeNet Installer - Checking Requirements</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="../template/assets/icon.png"/>
         <link rel="apple-touch-icon image_src" href="../template/assets/icon-large.png"/>
-        <link href="../template/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <!-- Theme style -->
-        <link href="../template/assets/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-        <!-- Install theme -->
-        <link href="assets/css/install.css" rel="stylesheet" type="text/css" />
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+        
+        <!-- New template CSS -->
+        <link href="../new-template/maxton/vertical-menu/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="../new-template/maxton/vertical-menu/assets/plugins/fontawesome/css/all.min.css" rel="stylesheet" type="text/css" />
+        <link href="../new-template/maxton/vertical-menu/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+        
+        <style>
+            .auth-page {
+                background: #f3f3f9;
+                display: flex;
+                min-height: 100vh;
+                align-items: center;
+                justify-content: center;
+            }
+            .installer-box {
+                max-width: 600px;
+                width: 100%;
+                margin: 0 auto;
+                background: #fff;
+                border-radius: 10px;
+                box-shadow: 0 0 20px rgba(0,0,0,0.1);
+                padding: 2rem;
+            }
+            .installer-logo {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+            .installer-logo h3 {
+                font-size: 2rem;
+                margin: 1rem 0;
+            }
+            .check-status {
+                text-align: center;
+                margin: 2rem 0;
+            }
+            .check-status i {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+            .loading-spinner {
+                width: 3rem;
+                height: 3rem;
+            }
+        </style>
     </head>
-    <body class="login-page">
-        <div class="login-box">
-            <div class="login-logo">
-                <b>Eye</b>Net Installer
+    <body class="auth-page">
+        <div class="installer-box">
+            <div class="installer-logo">
+                <h3><span class="text-primary">Eye</span>Net Installer</h3>
             </div>
-            <div class="login-box-body">
-                <div class="install-steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <div class="step-label">Requirements</div>
-                    </div>
-                    <div class="step active">
-                        <div class="step-number">2</div>
-                        <div class="step-label">Configuration</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <div class="step-label">Installation</div>
-                    </div>
+
+            <div class="check-status">
+                <div class="spinner-border text-primary loading-spinner" role="status">
+                    <span class="visually-hidden">Loading...</span>
                 </div>
+                <h4 class="mt-3">Checking Requirements...</h4>
+                <p class="text-muted">Please wait while we verify your system configuration.</p>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="index.php" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Installation
+                </a>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script src="../new-template/maxton/vertical-menu/assets/js/jquery.min.js"></script>
+        <script src="../new-template/maxton/vertical-menu/assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../new-template/maxton/vertical-menu/assets/js/app.js"></script>
+        <script>
+            // Redirect to install.php after 2 seconds
+            setTimeout(function() {
+                window.location.href = 'install.php?' + window.location.search.substring(1);
+            }, 2000);
+        </script>
+    </body>
+</html>

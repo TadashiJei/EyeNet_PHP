@@ -202,54 +202,115 @@ if($status == 'ok') {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>EyeNet Update</title>
-        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <title>EyeNet Installer - Upgrade</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="../template/assets/icon.png"/>
         <link rel="apple-touch-icon image_src" href="../template/assets/icon-large.png"/>
-        <link href="../template/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <!-- Theme style -->
-		<link href="../template/assets/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
-
+        
+        <!-- New template CSS -->
+        <link href="../new-template/maxton/vertical-menu/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="../new-template/maxton/vertical-menu/assets/plugins/fontawesome/css/all.min.css" rel="stylesheet" type="text/css" />
+        <link href="../new-template/maxton/vertical-menu/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+        
+        <style>
+            .auth-page {
+                background: #f3f3f9;
+                display: flex;
+                min-height: 100vh;
+                align-items: center;
+                justify-content: center;
+            }
+            .installer-box {
+                max-width: 600px;
+                width: 100%;
+                margin: 0 auto;
+                background: #fff;
+                border-radius: 10px;
+                box-shadow: 0 0 20px rgba(0,0,0,0.1);
+                padding: 2rem;
+            }
+            .installer-logo {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+            .installer-logo h3 {
+                font-size: 2rem;
+                margin: 1rem 0;
+            }
+            .upgrade-content {
+                text-align: center;
+                margin: 2rem 0;
+            }
+            .version-info {
+                margin: 2rem 0;
+                padding: 1rem;
+                background: #f8f9fa;
+                border-radius: 0.5rem;
+            }
+            .version-item {
+                display: flex;
+                justify-content: space-between;
+                padding: 0.5rem 0;
+                border-bottom: 1px solid #dee2e6;
+            }
+            .version-item:last-child {
+                border-bottom: none;
+            }
+        </style>
     </head>
-  <body class="login-page">
-    <div class="login-box">
-      <div class="login-logo">
-        <b>Eye</b>Net Update
-      </div><!-- /.login-logo -->
-      <div class="login-box-body">
+    <body class="auth-page">
+        <div class="installer-box">
+            <div class="installer-logo">
+                <h3><span class="text-primary">Eye</span>Net Upgrade</h3>
+            </div>
 
-          <?php if($status == "ok"): ?>
-                        <p class="login-box-msg">Nothing to do, database is already at latest version.</p>
-          <?php endif; ?>
-          <?php if($status == "noconfig"): ?>
-                        <p class="login-box-msg">Configuration file is missing.</p>
-          <?php endif; ?>
-          <?php if($status == "updated"): ?>
-                        <p class="login-box-msg">Update complete!<br>Please delete the "install" folder.</p>
-          <?php endif; ?>
+            <?php if(isset($status)): ?>
+            <div class="alert alert-<?php echo $status['type']; ?> alert-dismissible fade show" role="alert">
+                <?php echo $status['message']; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php endif; ?>
 
-      </div><!-- /.login-box-body -->
-    </div><!-- /.login-box -->
+            <div class="upgrade-content">
+                <i class="fas fa-sync-alt fa-3x text-primary mb-3"></i>
+                <h4>System Upgrade</h4>
+                <p class="text-muted">Your EyeNet installation will be upgraded to the latest version</p>
 
+                <div class="version-info">
+                    <div class="version-item">
+                        <span>Current Version</span>
+                        <span class="text-muted">v<?php echo $currentversion; ?></span>
+                    </div>
+                    <div class="version-item">
+                        <span>Latest Version</span>
+                        <span class="text-primary">v<?php echo $latestversion; ?></span>
+                    </div>
+                </div>
 
+                <?php if($currentversion < $latestversion): ?>
+                <form action="upgrade.php" method="post" class="mt-4">
+                    <input type="hidden" name="upgrade" value="1">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-arrow-circle-up me-2"></i>Start Upgrade
+                    </button>
+                </form>
+                <?php else: ?>
+                <div class="alert alert-success mt-4" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>Your system is up to date!
+                </div>
+                <a href="../index.php" class="btn btn-primary mt-3">
+                    <i class="fas fa-home me-2"></i>Go to Dashboard
+                </a>
+                <?php endif; ?>
+            </div>
+        </div>
 
-    <!-- jQuery 2.2.3 -->
-    <script src="../template/assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
-    <!-- Bootstrap 3.3.2 JS -->
-    <script src="../template/assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-
-  </body>
-
-
+        <!-- Scripts -->
+        <script src="../new-template/maxton/vertical-menu/assets/js/jquery.min.js"></script>
+        <script src="../new-template/maxton/vertical-menu/assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../new-template/maxton/vertical-menu/assets/js/app.js"></script>
+    </body>
 </html>
