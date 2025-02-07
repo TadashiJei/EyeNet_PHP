@@ -1,6 +1,6 @@
 <?php
 
-$debug = true; // Enable debugging
+$debug = false;
 
 if($debug == false) {
     error_reporting(0);
@@ -11,9 +11,6 @@ if($debug == true) {
     error_reporting(E_ALL & ~E_NOTICE);
     ini_set('display_errors', '1');
 }
-
-// Debug: Log POST parameters received
-error_log("check.php received POST parameters: " . print_r($_POST, true));
 
 require('../vendor/classes/class.medoo.php');
 
@@ -31,7 +28,6 @@ try {
 }
 catch(Exception $e) {
     $ok = false;
-    error_log("Database connection error: " . $e->getMessage());
 }
 ?>
 <!DOCTYPE html>
@@ -94,40 +90,17 @@ catch(Exception $e) {
             </div>
 
             <div class="check-status">
-                <?php if ($ok): ?>
-                <i class="fas fa-check-circle text-success"></i>
-                <h4 class="mt-3">All Requirements Met!</h4>
-                <p class="text-muted">Your system meets all the requirements. Click continue to proceed with the installation.</p>
-                
-                <form action="install.php" method="post" id="installForm">
-                    <?php
-                    // Forward all POST parameters
-                    foreach ($_POST as $key => $value) {
-                        echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
-                    }
-                    ?>
-                    <button type="submit" class="btn btn-primary">Continue Installation</button>
-                </form>
-
-                <!-- Debug output -->
-                <?php if ($debug): ?>
-                <div class="mt-4 text-start">
-                    <h5>Debug Information:</h5>
-                    <pre><?php print_r($_POST); ?></pre>
+                <div class="spinner-border text-primary loading-spinner" role="status">
+                    <span class="visually-hidden">Loading...</span>
                 </div>
-                <?php endif; ?>
+                <h4 class="mt-3">Checking Requirements...</h4>
+                <p class="text-muted">Please wait while we verify your system configuration.</p>
+            </div>
 
-                <?php else: ?>
-                <i class="fas fa-times-circle text-danger"></i>
-                <h4 class="mt-3">Database Connection Failed</h4>
-                <p class="text-muted">Could not connect to the database with the provided credentials.</p>
-                
-                <div class="mt-4">
-                    <a href="index.php" class="btn btn-outline-danger">
-                        <i class="fas fa-arrow-left me-2"></i>Back to Setup
-                    </a>
-                </div>
-                <?php endif; ?>
+            <div class="text-center mt-4">
+                <a href="index.php" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Installation
+                </a>
             </div>
         </div>
 
@@ -135,15 +108,11 @@ catch(Exception $e) {
         <script src="../new-template/maxton/vertical-menu/assets/js/jquery.min.js"></script>
         <script src="../new-template/maxton/vertical-menu/assets/js/bootstrap.bundle.min.js"></script>
         <script src="../new-template/maxton/vertical-menu/assets/js/app.js"></script>
-        
-        <?php if ($ok): ?>
         <script>
-        // Ensure form submission is working
-        document.getElementById('installForm').onsubmit = function(e) {
-            console.log('Form submitting...');
-            return true;
-        };
+            // Redirect to install.php after 2 seconds
+            setTimeout(function() {
+                window.location.href = 'install.php?' + window.location.search.substring(1);
+            }, 2000);
         </script>
-        <?php endif; ?>
     </body>
 </html>
