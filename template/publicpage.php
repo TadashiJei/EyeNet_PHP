@@ -32,14 +32,10 @@
         <!-- Google Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
-		<!-- Theme style -->
-		<link href="template/assets/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-		<!-- AdminLTE Skins. Choose a skin from the css/skins
-			 folder instead of downloading all of them to reduce the load. -->
-		<link href="template/assets/dist/css/skins/_all-skins.css" rel="stylesheet" type="text/css" />
-
-        <!-- CUSTOM CSS -->
-		<link href="template/assets/custom.css" rel="stylesheet" type="text/css" />
+		<!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+        <!-- Modern Monitoring CSS -->
+        <link href="template/assets/css/monitoring.css" rel="stylesheet" type="text/css" />
 
         <!-- jQuery 2.2.3 -->
 		<script src="template/assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
@@ -66,15 +62,17 @@
 
                         <!-- Content Header (Page header) -->
                         <section class="content-header">
+                            <div class="logo-container">
+                                <img src="template/assets/img/eyenet-logo.svg" alt="EyeNet Logo" class="monitoring-logo">
+                            </div>
                             <h1><?php echo $page['name']; ?></h1>
-
                         </section>
 
                         <!-- Main content -->
                         <section class="content">
 
                             <?php if(strlen($page['info']) > 15) { ?>
-                                <div class="box box-default">
+                                <div class="box">
                                     <div class="box-body">
                                         <?php echo $page['info']; ?>
                                     </div>

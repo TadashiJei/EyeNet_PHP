@@ -6,4 +6,4 @@
     "password"=>"OoBT=KW=14aLi9rQ2aL..txz",
     "charset"=>"utf8",
     "port"=>3306,
-    "encryption_key"=>"5d134453f21d5d8df593e4aa9518da2a7798d0c2d5e01e1bff8f315c68b26091" ); ?>
+    "encryption_key"=>"a16a32557662ee9b7e85f81f0ebbbdee022b9bf698ed73eaab3968f06dd83c22" ); ?>

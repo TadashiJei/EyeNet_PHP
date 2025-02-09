@@ -3,8 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="description" content="EyeNet - Modern Server Monitoring Dashboard">
+        <meta name="theme-color" content="#00a65a">
         <title><?php if(isset($pageTitle)) echo $pageTitle . " - "; ?><?php echo strip_tags ( getConfigValue("app_name") ); ?></title>
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
 
         <?php if(file_exists($scriptpath . "/assets/icon.png")) { ?>
@@ -44,7 +46,11 @@
         <!-- jvectormap -->
         <link rel="stylesheet" href="template/assets/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
         <!-- Google Font -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+        <!-- Modern Override CSS -->
+        <link rel="stylesheet" href="template/assets/modern-override.css">
+        <!-- Dashboard Components CSS -->
+        <link rel="stylesheet" href="template/assets/dashboard-components.css">
 
 		<!-- Theme style -->
 		<link href="template/assets/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
@@ -52,11 +58,24 @@
 			 folder instead of downloading all of them to reduce the load. -->
 		<link href="template/assets/dist/css/skins/_all-skins.css" rel="stylesheet" type="text/css" />
 
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
         <!-- CUSTOM CSS -->
 		<link href="template/assets/custom.css" rel="stylesheet" type="text/css" />
 
+        <!-- Modern Override CSS -->
+        <link href="template/assets/css/modern-override.css" rel="stylesheet" type="text/css" />
+
+        <!-- Animations CSS -->
+        <link href="template/assets/css/animations.css" rel="stylesheet" type="text/css" />
+
         <!-- jQuery 2.2.3 -->
 		<script src="template/assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <!-- Modern Dashboard JS -->
+        <script src="template/assets/js/modern-dashboard.js"></script>
+        <!-- Sidebar Control -->
+        <script src="template/assets/js/sidebar-control.js"></script>
 
         <!-- DataTables -->
         <script src="template/assets/plugins/datatables/datatables.min.js"></script>
@@ -75,7 +94,7 @@
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
               <!-- Sidebar toggle button-->
-              <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+              <a href="#" class="sidebar-toggle" role="button">
                 <span class="sr-only"><?php _e('Toggle navigation'); ?></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -369,18 +388,32 @@
         </header>
 
         <aside class="main-sidebar">
-          <section class="sidebar">
-
-              <!-- Sidebar user panel -->
-              <div class="user-panel">
-                <div class="pull-left image">
-                  <img src="<?php echo getGravatar($liu['email'],"45"); ?>" class="img-circle" alt="User Image"  style="max-height:45px;max-width:45px;">
-                </div>
-                <div class="pull-left info">
-                  <p><?php echo $liu['name']; ?></p>
-                  <a href="#"><i class="fa fa-circle text-success"></i> <?php _e('Online'); ?></a>
-                </div>
+          <!-- Sidebar Header with Logo and User Panel -->
+          <div class="sidebar-header">
+              <a href="?route=dashboard">
+                  <img src="template/assets/logo.svg" alt="EyeNet Logo" class="sidebar-logo">
+              </a>
+          </div>
+          
+          <!-- User Panel -->
+          <div class="user-panel">
+              <div class="image">
+                  <img src="<?php echo getGravatar($liu['email'], 45); ?>" alt="User Image">
               </div>
+              <div class="info">
+                  <p><?php echo $liu['name']; ?></p>
+                  <small><span class="status-indicator"></span> <?php _e('Online'); ?></small>
+              </div>
+          </div>
+          
+          <!-- Sidebar Search -->
+          <div class="sidebar-search">
+              <div class="form-group">
+                  <input type="text" class="form-control" placeholder="<?php _e('Search...'); ?>">
+              </div>
+          </div>
+          
+          <section class="sidebar">
               <?php if(in_array("search",$perms)) { ?>
     			<!-- search form -->
     			<form method="get" class="sidebar-form">
@@ -393,14 +426,14 @@
     				</div>
     			</form>
                 <?php } ?>
-  				<!-- /.search form -->
-            <!-- sidebar menu: : style can be found in sidebar.less -->
+  				<!-- Main Navigation -->
             <ul class="sidebar-menu" data-widget="tree">
-			  <li class="header"><?php _e('MAIN NAVIGATION'); ?></li>
+			  <li class="menu-header"><?php _e('MAIN NAVIGATION'); ?></li>
 
               <li <?php if(strpos($route,'dashboard') !== false) echo 'class="active"'; ?>>
-                  <a href="?route=dashboard">
-                      <i class="fa fa-dashboard fa-fw"></i> <span><?php _e('Dashboard'); ?></span>
+                  <a href="?route=dashboard" class="nav-link">
+                      <i class="fa fa-dashboard"></i>
+                      <span><?php _e('Dashboard'); ?></span>
                   </a>
               </li>
 
